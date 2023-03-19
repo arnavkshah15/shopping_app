@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:shopping_app/model/items_model.dart';
+import 'package:shopping_app/pages/item_detail.dart';
 
 Widget customListTile(Items items, BuildContext context) {
   return Container(
     width: MediaQuery.of(context).size.width / 2,
     child: InkWell(
+      onTap: () {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => ItemsPage(items: items)));
+      },
       child: Container(
         margin: EdgeInsets.all(20.0),
         decoration: BoxDecoration(
@@ -30,12 +35,12 @@ Widget customListTile(Items items, BuildContext context) {
                             borderRadius: BorderRadius.circular(12.0),
                             image: DecorationImage(
                               image: NetworkImage(items.image!),
-                              fit: BoxFit.fitHeight,
+                              fit: BoxFit.scaleDown,
                             )),
                         child: FadeInImage.assetNetwork(
                           placeholder: 'assets/images/load.jpg',
                           image: items.image!,
-                          fit: BoxFit.cover,
+                          fit: BoxFit.scaleDown,
                           width: double.infinity,
                           height: 150.0,
                           fadeInDuration: const Duration(milliseconds: 500),
@@ -43,7 +48,7 @@ Widget customListTile(Items items, BuildContext context) {
                           imageErrorBuilder: (BuildContext context,
                               Object exception, StackTrace? stackTrace) {
                             return Image.asset('assets/images/load.jpg',
-                                fit: BoxFit.cover);
+                                fit: BoxFit.scaleDown);
                           },
                         ),
                       )

@@ -23,18 +23,18 @@ class _HomePageState extends State<HomePage> {
     'Bags'
   ];
 
-  void _onButtonPressed(int index) {
+  void _onButtonPressed(int ind) {
     setState(() {
-      _selectedButtonIndex = index;
+      _selectedButtonIndex = ind;
     });
   }
 
-  Widget _buildButton(int index) {
-    bool isSelected = _selectedButtonIndex == index;
+  Widget _buildButton(int ind) {
+    bool isSelected = _selectedButtonIndex == ind;
     Color buttonColor = isSelected ? Colors.black : Colors.white;
 
     return GestureDetector(
-      onTap: () => _onButtonPressed(index),
+      onTap: () => _onButtonPressed(ind),
       child: Container(
         margin: EdgeInsets.all(8),
         padding: EdgeInsets.all(15),
@@ -43,7 +43,7 @@ class _HomePageState extends State<HomePage> {
             borderRadius: BorderRadius.circular(8),
             border: Border.all()),
         child: Text(
-          _buttonTexts[index],
+          _buttonTexts[ind],
           style: TextStyle(
             color: isSelected ? Colors.white : Colors.black,
             fontSize: 14,
