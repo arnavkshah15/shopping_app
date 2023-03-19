@@ -16,63 +16,87 @@ Widget customListTile(Items items, BuildContext context) {
                 blurRadius: 3.0,
               ),
             ]),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Stack(
           children: [
-            items.image != null
-                ? Container(
-                    height: 150.0,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12.0),
-                        image: DecorationImage(
-                          image: NetworkImage(items.image!),
-                          fit: BoxFit.fitHeight,
-                        )),
-                    child: FadeInImage.assetNetwork(
-                      placeholder: 'assets/images/load.jpg',
-                      image: items.image!,
-                      fit: BoxFit.cover,
-                      width: double.infinity,
-                      height: 150.0,
-                      fadeInDuration: const Duration(milliseconds: 500),
-                      fadeOutDuration: const Duration(milliseconds: 500),
-                      imageErrorBuilder: (BuildContext context,
-                          Object exception, StackTrace? stackTrace) {
-                        return Image.asset('assets/images/load.jpg',
-                            fit: BoxFit.cover);
-                      },
-                    ),
-                  )
-                : Container(
-                    height: 150.0,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage('assets/images/news.jpg'),
-                          fit: BoxFit.cover),
-                      borderRadius: BorderRadius.circular(12.0),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                items.image != null
+                    ? Container(
+                        height: 150.0,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12.0),
+                            image: DecorationImage(
+                              image: NetworkImage(items.image!),
+                              fit: BoxFit.fitHeight,
+                            )),
+                        child: FadeInImage.assetNetwork(
+                          placeholder: 'assets/images/load.jpg',
+                          image: items.image!,
+                          fit: BoxFit.cover,
+                          width: double.infinity,
+                          height: 150.0,
+                          fadeInDuration: const Duration(milliseconds: 500),
+                          fadeOutDuration: const Duration(milliseconds: 500),
+                          imageErrorBuilder: (BuildContext context,
+                              Object exception, StackTrace? stackTrace) {
+                            return Image.asset('assets/images/load.jpg',
+                                fit: BoxFit.cover);
+                          },
+                        ),
+                      )
+                    : Container(
+                        height: 150.0,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: AssetImage('assets/images/news.jpg'),
+                              fit: BoxFit.cover),
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                      ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    alignment: Alignment.center,
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Text(items.title!.length > 40
+                            ? items.title!.substring(0, 39)
+                            : items.title!),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 10),
+                          child: Text(
+                            '\$' + items.price.toString(),
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                alignment: Alignment.center,
-                child: Column(
-                  children: [
-                    Text(items.title!),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10),
-                      child: Text(
-                        '\$' + items.price.toString(),
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
+                )
+              ],
+            ),
+            Positioned(
+              bottom: 100,
+              right: 60,
+              child: GestureDetector(
+                onTap: () {},
+                child: ClipOval(
+                  child: CircleAvatar(
+                    radius: 20,
+                    child: Image.asset(
+                      "assets/images/pp.png",
                     ),
-                  ],
+                  ),
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),

@@ -4,7 +4,6 @@ import 'package:shopping_app/model/items_model.dart';
 import 'package:shopping_app/API/api_services.dart';
 import 'package:http/http.dart' as http;
 
-
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -14,6 +13,45 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   ApiService client = ApiService();
+  int _selectedButtonIndex = -1;
+
+  List<String> _buttonTexts = [
+    'All Categories',
+    'MAN',
+    'Women',
+    'Kids',
+    'Bags'
+  ];
+
+  void _onButtonPressed(int index) {
+    setState(() {
+      _selectedButtonIndex = index;
+    });
+  }
+
+  Widget _buildButton(int index) {
+    bool isSelected = _selectedButtonIndex == index;
+    Color buttonColor = isSelected ? Colors.black : Colors.white;
+
+    return GestureDetector(
+      onTap: () => _onButtonPressed(index),
+      child: Container(
+        margin: EdgeInsets.all(8),
+        padding: EdgeInsets.all(15),
+        decoration: BoxDecoration(
+            color: buttonColor,
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all()),
+        child: Text(
+          _buttonTexts[index],
+          style: TextStyle(
+            color: isSelected ? Colors.white : Colors.black,
+            fontSize: 14,
+          ),
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,28 +64,13 @@ class _HomePageState extends State<HomePage> {
           ),
           elevation: 0,
           actions: [
-            Row(
-              children: [
-                ElevatedButton(
-                  onPressed: ()  {
-                  },
-                  child: Container(
-                    width: 200,
-                    height: 200,
-                    child: Image.asset(
-                      'assets/images/pp.png',
-                    ),
-                  ),
-                  style: ButtonStyle(
-                    elevation: null,
-                    backgroundColor: MaterialStateProperty.resolveWith<Color>(
-                      (Set<MaterialState> states) {
-                        return Colors.white;
-                      },
-                    ),
-                  ),
+            ClipOval(
+              child: CircleAvatar(
+                radius: 30,
+                child: Image.asset(
+                  "assets/images/pp.png",
                 ),
-              ],
+              ),
             ),
           ]),
       body: SingleChildScrollView(
@@ -79,6 +102,19 @@ class _HomePageState extends State<HomePage> {
                   borderRadius: BorderRadius.circular(10),
                   child: Image.asset("assets/images/news.jpg")),
             ),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _buildButton(0),
+                  _buildButton(1),
+                  _buildButton(2),
+                  _buildButton(3),
+                  _buildButton(4),
+                ],
+              ),
+            ),
             SizedBox(
               child: FutureBuilder(
                 future: client.getItems(),
@@ -93,7 +129,7 @@ class _HomePageState extends State<HomePage> {
                         physics: NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         crossAxisCount: 2,
-                        childAspectRatio: 0.8,
+                        childAspectRatio: 0.65,
                         children: List.generate(items.length, (index) {
                           return customListTile(items[index], context);
                         }));
