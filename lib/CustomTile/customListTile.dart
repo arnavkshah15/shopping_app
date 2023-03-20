@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shopping_app/model/items_model.dart';
 import 'package:shopping_app/pages/item_detail.dart';
+import 'package:shopping_app/pages/items_detail.dart';
 
 Widget customListTile(Items items, BuildContext context) {
   return Container(
@@ -89,14 +90,14 @@ Widget customListTile(Items items, BuildContext context) {
             ),
             Positioned(
               bottom: 100,
-              right: 60,
+              right: MediaQuery.of(context).size.width / 6.5,
               child: GestureDetector(
                 onTap: () {},
                 child: ClipOval(
                   child: CircleAvatar(
                     radius: 20,
                     child: Image.asset(
-                      "assets/images/pp.png",
+                      "assets/images/shop.jpg",
                     ),
                   ),
                 ),

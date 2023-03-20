@@ -13,7 +13,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   ApiService client = ApiService();
-  int _selectedButtonIndex = -1;
+  int _selectedButtonIndex = 0;
 
   List<String> _buttonTexts = [
     'All Categories',
@@ -23,9 +23,9 @@ class _HomePageState extends State<HomePage> {
     'Bags'
   ];
 
-  void _onButtonPressed(int ind) {
+  void _onButtonPressed(int index) {
     setState(() {
-      _selectedButtonIndex = ind;
+      _selectedButtonIndex = index;
     });
   }
 
@@ -100,7 +100,7 @@ class _HomePageState extends State<HomePage> {
               padding: const EdgeInsets.all(20.0),
               child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
-                  child: Image.asset("assets/images/news.jpg")),
+                  child: Image.asset("assets/images/moff.webp")),
             ),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
