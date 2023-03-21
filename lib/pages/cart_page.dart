@@ -1,24 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:shopping_app/model/cart_model.dart';
+import 'package:shopping_app/model/items_model.dart';
 
 class CartPage extends StatefulWidget {
-  const CartPage({Key? key}) : super(key: key);
+  final List<Items> cart;
+
+  const CartPage({Key? key, required this.cart}) : super(key: key);
 
   @override
   _CartPageState createState() => _CartPageState();
 }
 
 class _CartPageState extends State<CartPage> {
-  List<CartItem> _cartItems = [];
-
-  double _calculateTotalPrice() {
-    double totalPrice = 0;
-    _cartItems.forEach((item) {
-      totalPrice += item.price * item.quantity;
-    });
-    return totalPrice;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,21 +29,55 @@ class _CartPageState extends State<CartPage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Placeholder(),
-            _cartItems.isEmpty
+            widget.cart.isEmpty
                 ? Center(
                     child: Text('No items in cart.'),
                   )
-                : ListView.builder(
-                    itemCount: _cartItems.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      final cartItem = _cartItems[index];
-                      return ListTile(
-                        title: Text(cartItem.title),
-                        subtitle: Text('\$${cartItem.price}'),
-                        trailing: Text('x${cartItem.quantity}'),
-                      );
-                    },
+                : SizedBox(
+                    height: 200,
+                    child: ListView.builder(
+                      itemCount: widget.cart.length,
+                      itemBuilder: (context, index) {
+                        final item = widget.cart[index];
+                        return ListTile(
+                            title: Row(
+                              children: [
+                                Container(
+                                  height: 150.0,
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12.0),
+                                      image: DecorationImage(
+                                        image: NetworkImage(item.image!),
+                                        fit: BoxFit.scaleDown,
+                                      )),
+                                  child: FadeInImage.assetNetwork(
+                                    placeholder: 'assets/images/load.jpg',
+                                    image: item.image!,
+                                    fit: BoxFit.scaleDown,
+                                    width: double.infinity,
+                                    height: 150.0,
+                                    fadeInDuration:
+                                        const Duration(milliseconds: 500),
+                                    fadeOutDuration:
+                                        const Duration(milliseconds: 500),
+                                    imageErrorBuilder: (BuildContext context,
+                                        Object exception,
+                                        StackTrace? stackTrace) {
+                                      return Image.asset(
+                                          'assets/images/load.jpg',
+                                          fit: BoxFit.scaleDown);
+                                    },
+                                  ),
+                                ),
+                                Text(item.title!),
+                              ],
+                            ),
+                            subtitle: Text('${item.quantity}'),
+                            trailing: Text(
+                                '\$${((item.price! * item.quantity!).toString())}'));
+                      },
+                    ),
                   ),
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -91,7 +118,7 @@ class _CartPageState extends State<CartPage> {
                   child: Column(
                     children: [
                       Text(
-                        '\$${_calculateTotalPrice().toStringAsFixed(2)}',
+                        '0',
                         textAlign: TextAlign.end,
                         style: TextStyle(
                           fontSize: 16,
@@ -110,7 +137,7 @@ class _CartPageState extends State<CartPage> {
                       Padding(
                         padding: const EdgeInsets.only(top: 30.0),
                         child: Text(
-                          '\$${(_calculateTotalPrice() + 5).toStringAsFixed(2)}',
+                          '\$0',
                           textAlign: TextAlign.end,
                           style: TextStyle(
                             fontSize: 16,

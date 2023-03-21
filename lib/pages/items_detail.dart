@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:shopping_app/model/cart_model.dart';
 import 'package:shopping_app/model/items_model.dart';
+import 'package:shopping_app/pages/cart_page.dart';
 
 class ItemsPage extends StatefulWidget {
   final Items items;
@@ -87,6 +89,22 @@ class _ItemsPageState extends State<ItemsPage> {
     );
   }
 
+  List<Items> cart = [];
+
+  void _onButtonPressedd() {
+    setState(() {
+      var item = Items(
+        id: widget.items.id,
+        title: widget.items.title,
+        price: widget.items.price,
+        rating: widget.items.rating,
+        image: widget.items.image,
+        quantity: item_num,
+      );
+      cart.add(item);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -101,7 +119,14 @@ class _ItemsPageState extends State<ItemsPage> {
           elevation: 0,
           actions: [
             IconButton(
-                onPressed: () => Navigator.pushReplacementNamed(context, '/c'),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CartPage(cart: cart),
+                    ),
+                  );
+                },
                 icon: Icon(Icons.card_travel))
           ],
         ),
@@ -279,27 +304,30 @@ class _ItemsPageState extends State<ItemsPage> {
           ],
         ),
         bottomNavigationBar: Material(
-          child: Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height / 25,
-            color: Colors.black,
-            alignment: Alignment.bottomCenter,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.shopping_bag_rounded,
-                  color: Colors.white,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 5),
-                  child: Text(
-                    "Add to cart",
-                    style: TextStyle(color: Colors.white),
+          child: GestureDetector(
+            onTap: () => _onButtonPressedd(),
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height / 25,
+              color: Colors.black,
+              alignment: Alignment.bottomCenter,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.shopping_bag_rounded,
+                    color: Colors.white,
                   ),
-                ),
-              ],
+                  Padding(
+                    padding: const EdgeInsets.only(left: 5),
+                    child: Text(
+                      "Add to cart",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ));

@@ -10,6 +10,8 @@ class Items {
   final String? description;
   final String? image;
   final Rating? rating;
+  final int? quantity;
+  
 
   Items({
     this.id,
@@ -18,7 +20,8 @@ class Items {
     this.category,
     this.description,
     this.image,
-    this.rating
+    this.rating,
+    this.quantity
   });
   factory Items.fromJson(Map<String, dynamic> json) {
     return Items(

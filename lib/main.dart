@@ -18,7 +18,9 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.grey,
       ),
       initialRoute: '/',
-      routes: {'/': (context) => HomePage(), '/c': (context) => CartPage()},
+      routes: {
+        '/': (context) => HomePage(),
+      },
     );
   }
 }
