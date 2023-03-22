@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:shopping_app/model/items_model.dart';
-import 'package:shopping_app/pages/item_detail.dart';
 import 'package:shopping_app/pages/items_detail.dart';
 
 Widget customListTile(Items items, BuildContext context) {

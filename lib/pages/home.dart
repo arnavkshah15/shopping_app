@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shopping_app/CustomTile/customListTile.dart';
 import 'package:shopping_app/model/items_model.dart';
-import 'package:shopping_app/API/api_services.dart';
+import 'package:shopping_app/model/api_services.dart';
 import 'package:http/http.dart' as http;
 
 class HomePage extends StatefulWidget {

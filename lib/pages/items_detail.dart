@@ -118,16 +118,20 @@ class _ItemsPageState extends State<ItemsPage> {
           backgroundColor: Colors.transparent,
           elevation: 0,
           actions: [
-            IconButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => CartPage(cart: cart),
-                    ),
-                  );
-                },
-                icon: Icon(Icons.card_travel))
+            Badge(
+              label: Text("0"),
+              alignment: AlignmentDirectional.centerEnd,
+              child: IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CartPage(cart: cart),
+                      ),
+                    );
+                  },
+                  icon: Icon(Icons.card_travel)),
+            )
           ],
         ),
         body: Stack(
@@ -155,8 +159,7 @@ class _ItemsPageState extends State<ItemsPage> {
                             width: double.infinity,
                             decoration: BoxDecoration(
                               image: DecorationImage(
-                                  image: NetworkImage(
-                                      'https://source.unsplash.com/weekly?coding'),
+                                  image: AssetImage('images/load.jpg'),
                                   fit: BoxFit.scaleDown),
                               borderRadius: BorderRadius.circular(12.0),
                             ),
